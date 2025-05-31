@@ -1,0 +1,8 @@
+graph TD
+    RegistrationRound -->|DONE| FetchPriceDataRound
+    FetchPriceDataRound -->|DONE| UpdatePriceDataRound
+    FetchPriceDataRound -->|TIMEOUT| RegistrationRound
+    UpdatePriceDataRound -->|DONE| ConsumePriceAndPrintMessageRound
+    ConsumePriceAndPrintMessageRound -->|DONE| ResetAndPauseRound
+    ResetAndPauseRound -->|DONE| RegistrationRound
+

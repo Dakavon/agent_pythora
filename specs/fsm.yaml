@@ -1,0 +1,21 @@
+alphabet_in:
+- DONE
+- TIMEOUT
+default_start_state: RegistrationRound
+final_states: []
+label: pythoraAbciApp
+start_states:
+- RegistrationRound
+states:
+- FetchPriceDataRound
+- ConsumePriceAndPrintMessageRound
+- RegistrationRound
+- ResetAndPauseRound
+- UpdatePriceDataRound
+transition_func:
+  (ConsumePriceAndPrintMessageRound, DONE): ResetAndPauseRound
+  (FetchPriceDataRound, DONE): UpdatePriceDataRound
+  (FetchPriceDataRound, TIMEOUT): RegistrationRound
+  (RegistrationRound, DONE): FetchPriceDataRound
+  (ResetAndPauseRound, DONE): RegistrationRound
+  (UpdatePriceDataRound, DONE): ConsumePriceAndPrintMessageRound
