@@ -1,0 +1,24 @@
+name: http
+author: eightballer
+version: 0.1.0
+protocol_specification_id: eightballer/http:0.1.0
+type: protocol
+description: A protocol for HTTP requests and responses.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  README.md: bafybeibu6li7r5bqxhkecbuhrsa2hmdshlc5vg3rm7xctg5ypvbwxa4yqq
+  __init__.py: bafybeiaggtihzzhxujttdwatkkhm7ljapqp6y7iwz72coxo2liydjo7zfq
+  dialogues.py: bafybeifctnbuwjfybb7g6b6gkl46ogtnhmuzo7z5aqsw6noj2lrgciai6a
+  http_pb2.py: bafybeie3aotilg3szhbgfdu7iqbjo7um46pczfz3utbwdpyia4xoophcly
+  message.py: bafybeic6uoia2vmadjiava5v42o2v4eh64zebernkhvx5y745puah7fhue
+  nttp.proto: bafybeib2j7ebigykufwkksd2juzevikidxznt5i2v3biashxa4jbubvv54
+  protocol_spec.yaml: bafybeih6teo4fu2n24anz47qbdw5lhd2bumiquv4cyvxai5qkgk7nxsooy
+  serialization.py: bafybeidjqwktjshstrwvlj5yoqdpqcfckk4bweowyl6jh5wagygxbcmgzi
+  tests/__init__.py: bafybeici3ejsu5uzovuodlc2h5alessjouni7e7mihvwkqemjnqa5kwsky
+  tests/test_http_dialogues.py: bafybeicytdigsq6i5yehcm5lhscfidvk6za5osk4chqke7zr6znseily5y
+  tests/test_http_messages.py: bafybeie4ussn5db2krbvjalwjapkb2v3xmqeuno5ackaszqm5pmoyikqfu
+fingerprint_ignore_patterns: []
+dependencies:
+  protobuf: {}
+  pydantic: {}

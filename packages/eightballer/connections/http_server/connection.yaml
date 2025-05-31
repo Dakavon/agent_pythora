@@ -1,0 +1,42 @@
+name: http_server
+author: eightballer
+version: 0.1.0
+type: connection
+description: The HTTP server connection that wraps http server implementing a RESTful
+  API specification.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  README.md: bafybeihkuhhsdfw5qqtz2jwpfppub6yvsehzmvmaqjlxnal4v76x47mcrq
+  __init__.py: bafybeif3pazkjyt6dltwcuowu7dz5vkol4gb2pj5vfi65x3to7w7qfucl4
+  connection.py: bafybeiettfkkav7jonp73gxvfuqq4vhaklet5zgeegvopxkxalob2vyx3i
+  tests/__init__.py: bafybeidneidgntc3i2dgyjes5ljzu4ve7fhl5pixdrps2ipwpccxihxtny
+  tests/data/petstore_sim.yaml: bafybeiaekkfxljlv57uviz4ug6isdqbzsnuxpsgy3dvhzh22daql3xh2i4
+  tests/test_http_server.py: bafybeiercvmma3y4ue6nbp5oeh7ofcds75id5wsvbj4vwd5nvld42tmf7a
+  tests/test_http_server_and_client.py: bafybeieoswjt5pdji4mu5slf5ravmfl3g33zgvrxxtgp44onny3kgp6a6a
+fingerprint_ignore_patterns: []
+connections:
+- eightballer/http_client:0.1.0:bafybeiaz5auftwxpt4czrmeeesggqlkc2kosmetq6adrebeu6g7bkhqc2u
+protocols:
+- eightballer/http:0.1.0:bafybeid75xhq7hfdt7sgj7yrn44yj57xrgxscaw34ir46tndfzvodioxme
+class_name: HTTPServerConnection
+config:
+  api_spec_path: null
+  host: 127.0.0.1
+  port: 8000
+  ssl_cert: null
+  ssl_key: null
+  target_skill_id: null
+excluded_protocols: []
+restricted_to_protocols:
+- eightballer/http:0.1.0
+dependencies:
+  aiohttp:
+    version: <4.0.0,>=3.8.5
+  jsonschema:
+    version: '>=4.3.3'
+  openapi-core:
+    version: ==0.14.5
+  openapi-spec-validator:
+    version: ==0.2.8
+is_abstract: false

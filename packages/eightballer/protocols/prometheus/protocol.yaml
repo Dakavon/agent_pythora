@@ -1,0 +1,21 @@
+name: prometheus
+author: eightballer
+version: 1.0.0
+protocol_specification_id: eightballer/prometheus:1.0.0
+type: protocol
+description: A protocol for adding and updating metrics to a prometheus server.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeigrlbbo4oyqd4ledkeabpx2f6gmkgvhmrebb62shpu43dejujr3y4
+  dialogues.py: bafybeidiqddygrrture2szs6dlq7titfk6wnvwsk6ah7gwf2wzfw36syj4
+  message.py: bafybeihlecxrzrj72bo6hnlrjpbsqcsfcn67bjnzihsnzmhxgkwatlulnq
+  prometheus.proto: bafybeidf4wuox4737pex22oxnqevdcuunf56yaih3gxahhalalhtvgsnfy
+  prometheus_pb2.py: bafybeicwnx7osazxnh4jda24xqa6dgnzqey7yuboavs2hfmuijzaiom4ju
+  serialization.py: bafybeicvi6sskzljf2z4wa6t7xatxufsj23qxucvtg6z6ybnnpiyik6cqu
+  tests/__init__.py: bafybeieycud6sqvlttmsijfbz5gagjwc4q3jkhgfogotgf4pjnh5agdzbm
+  tests/test_prometheus_dialogues.py: bafybeicfptuwczvsz4ksmea6mjpbfk73uqf5tx7muvehquucb7qi7e5g74
+  tests/test_prometheus_messages.py: bafybeidjers5t7ioewbfrf72weavucjgzh2dyulrigbjkfxelxskpdmpvi
+fingerprint_ignore_patterns: []
+dependencies:
+  protobuf: {}
