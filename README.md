@@ -1,4 +1,5 @@
 # 🤖 Pythora
+![Pythora Logo](img/Logo_Pythora.png)
 
 **Pythora** is a decentralized agent built using the [Autonolas](https://olas.network/) framework to fetch real-time price feeds from the [Pyth Network](https://pyth.network/) off-chain and update them on-chain.
 Pyth Network provides real-time financial market data to smart contracts, as well as allows to request secure, verifiable random numbers using Pyth Entropy. 
