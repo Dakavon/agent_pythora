@@ -4,6 +4,8 @@
 Pyth Network provides real-time financial market data to smart contracts, as well as allows to request secure, verifiable random numbers using Pyth Entropy. 
 This project is designed for the "price pusher" use case.
 
+Pythora entropy consumer is deployed on Arbitrum Sepolia: `0xb2Fa94AEe40Ad375D1bb65F5442f36DBFc0bD35a`
+
 > Built at [ETHPrague 2025](https://ethglobal.com/events/prague)
 
 ---
