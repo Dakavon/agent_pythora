@@ -8,11 +8,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "buildAbi": "forge build --extra-output-files abi"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "dakavon",
+  "license": "MIT",
   "dependencies": {
     "@pythnetwork/entropy-sdk-solidity": "^2.0.0"
   }
