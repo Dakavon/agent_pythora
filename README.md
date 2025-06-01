@@ -14,6 +14,7 @@ This project is designed for the "price pusher" use case.
   - [Table of Contents](#table-of-contents)
   - [🧠 What It Does](#-what-it-does)
   - [🛠️ Technologies Used](#️-technologies-used)
+  - [Development Tools](#development-tools)
   - [🚀 Getting Started](#-getting-started)
     - [Installation and Setup for Development](#installation-and-setup-for-development)
   - [Commands](#commands)
@@ -22,6 +23,7 @@ This project is designed for the "price pusher" use case.
     - [Testing](#testing)
     - [Locking](#locking)
     - [all](#all)
+  - [Acknowledgements](#acknowledgements)
   - [License](#license)
 
 ---
@@ -44,6 +46,13 @@ Pythora creates an **Olas Agent** that:
 | **Autonolas**      | Framework for building autonomous agents |
 | **EVM blockchain** | On-chain price updates to be used in DeFi protocols |
 
+---
+
+## Development Tools
+
+This project was initially scaffolded using [adev](https://github.com/8ball030/auto_dev), an awesome tool that helped me quickly generate the agent structure. It also allowed me to seamlessly convert a Mermaid diagram into a well-structured behavior flow — saving a ton of time and effort!
+
+---
 
 ## 🚀 Getting Started
 
@@ -90,6 +99,18 @@ make hashes
 ```shell
 make all
 ```
+
+---
+
+## Acknowledgements
+Big thanks to my friends who supported me during this hackathon. Their guidance and help navigating complex tools were invaluable. Shoutout to:
+
+[8ball030](https://github.com/8ball030)
+[Karrenbelt](https://github.com/Karrenbelt)
+
+I couldn’t have done it without you!
+
+---
 
 ## License
 
