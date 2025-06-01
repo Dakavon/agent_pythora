@@ -39,10 +39,10 @@ from aea_ledger_ethereum import (
 )
 from packages.dakavon.contracts.pyth import PUBLIC_ID as PYTH_PUBLIC_ID
 
-GAS = 5_000_000
-GAS_PREMIUM = 1.1 # 10% gas premium
+GAS = 500_000
+GAS_PREMIUM = 1.1  # 10% gas premium
 TX_TIMEOUT = 60  # seconds
-
+PYTH_USD_PRICEFEED_ID = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
 
 def load_contract(contract_path: Path) -> Contract:
     """Helper function to load a contract."""
@@ -134,9 +134,7 @@ class SignedTransactionTranslator:
         #     v=cast(int, signed_transaction_dict["v"]),
         # )
         return SignedTransaction(
-            HexBytes(
-                cast(str, signed_transaction_dict["raw_transaction"])
-            ),
+            HexBytes(cast(str, signed_transaction_dict["raw_transaction"])),
             HexBytes(cast(str, signed_transaction_dict["hash"])),
             cast(int, signed_transaction_dict["r"]),
             cast(int, signed_transaction_dict["s"]),
@@ -189,13 +187,17 @@ class BaseState(State, ABC):
     def build_transaction(self, func, value: int = 0):
         """Build the transaction."""
 
-        nonce = self.sepolia_ledger_api.api.eth.get_transaction_count(self.crypto.address)
+        nonce = self.sepolia_ledger_api.api.eth.get_transaction_count(
+            self.crypto.address
+        )
         return func.build_transaction(
             {
                 "from": self.crypto.address,
                 "nonce": nonce,
                 "gas": GAS,
-                "gasPrice": int(self.sepolia_ledger_api.api.eth.gas_price * GAS_PREMIUM),
+                "gasPrice": int(
+                    self.sepolia_ledger_api.api.eth.gas_price * GAS_PREMIUM
+                ),
                 "value": value,
             }
         )
@@ -251,7 +253,29 @@ class ConsumePriceAndPrintMessageRound(BaseState):
     def act(self) -> None:
         """Perform the act."""
 
-        # self.context.shared_state["data"]
+        # Get from shared state for this step: tx_receipt_status
+        tx_receipt_status = self.context.shared_state.get("tx_receipt_status")
+
+        if tx_receipt_status is None:
+            self.context.logger.error(
+                "No transaction receipt status found in shared state."
+            )
+            raise ValueError("No transaction receipt status found in shared state.")
+        elif tx_receipt_status == 1:
+            # Read price fron Pyth contract
+            pythUsdPrice = self.pyth_contract.get_price_no_older_than(
+                ledger_api=self.sepolia_ledger_api,
+                contract_address=self.pyth_address,
+                id=PYTH_USD_PRICEFEED_ID,
+                age=60,  # 60 seconds
+            )
+            pythUsdPrice = pythUsdPrice.get("price")
+            raw_price, _, exponent, _ = pythUsdPrice
+
+            # Calculate the actual price by shifting decimals
+            formatted_price = raw_price * (10 ** exponent)
+
+            self.context.logger.info("Price consumed from Pyth contract: $%.8f", formatted_price)
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
@@ -283,7 +307,7 @@ class ResetAndPauseRound(BaseState):
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
-        time.sleep(5)
+        time.sleep(30)  # Pause for 30 seconds before next round (we do not want to spend so much gas for now)
 
 
 class UpdatePriceDataRound(BaseState):
@@ -310,31 +334,48 @@ class UpdatePriceDataRound(BaseState):
                 contract_address=self.pyth_address,
                 update_data=["0x" + price_update_data],
             )
-            update_fee = update_fee.get('feeAmount')
-            print(
-                f"### UpdatePriceDataRound: Update fees: {update_fee} Wei"
-            )
+            update_fee = update_fee.get("feeAmount")
+            print(f"### UpdatePriceDataRound: Update fees: {update_fee} Wei")
 
-            # Create a signed transaction to update the price feeds
-            w3_function = self.pythUpdatePriceFeeds(data=price_update_data)
-            raw_tx = self.build_transaction(w3_function, value=update_fee)
-            signed_tx = self.crypto.entity.sign_transaction(raw_tx)
-            signed_tx_dict = signed_tx_to_dict(signed_tx)
+            try:
+                # Create a signed transaction to update the price feeds
+                w3_function = self.pythUpdatePriceFeeds(data=price_update_data)
+                raw_tx = self.build_transaction(w3_function, value=update_fee)
+                signed_tx = self.crypto.entity.sign_transaction(raw_tx)
+                signed_tx_dict = signed_tx_to_dict(signed_tx)
 
-            # print(f"### UpdatePriceDataRound: Signed transaction: {signed_tx_dict['raw_transaction']}")
-            # self.context.logger.info({signed_tx})
-            # print(dir(signed_tx))
-            # print(dir(signed_tx_dict))
-            # breakpoint()
+                # print(f"### UpdatePriceDataRound: Signed transaction: {signed_tx_dict['raw_transaction']}")
+                # self.context.logger.info({signed_tx})
+                # print(dir(signed_tx))
+                # print(dir(signed_tx_dict))
+                # breakpoint()
 
-            # Execute the transaction to update price data
-            tx_hash = try_send_signed_transaction(self.sepolia_ledger_api, signed_tx_dict)
-            self.context.logger.info(f"Transaction hash: {tx_hash}")
+                # Execute the transaction to update price data
+                tx_hash = try_send_signed_transaction(
+                    self.sepolia_ledger_api, signed_tx_dict
+                )
+                self.context.logger.info(f"Transaction hash: {tx_hash}")
 
-            tx_receipt = self.sepolia_ledger_api.api.eth.wait_for_transaction_receipt(
-                tx_hash, timeout=TX_TIMEOUT
-            )
-            print(f"Transaction receipt: {tx_receipt}")
+                tx_receipt = (
+                    self.sepolia_ledger_api.api.eth.wait_for_transaction_receipt(
+                        tx_hash, timeout=TX_TIMEOUT
+                    )
+                )
+                print(f"Transaction receipt: {tx_receipt}")
+                if tx_receipt.status == 1:
+                    self.context.logger.info(
+                        "Transaction successful! Price feeds updated on-chain."
+                    )
+                    self.context.shared_state["tx_receipt_status"] = tx_receipt.status
+                elif tx_receipt.status == 0:
+                    self.context.logger.error(
+                        "Transaction failed! Price feeds not updated on-chain."
+                    )
+                    self.context.shared_state["tx_receipt_status"] = tx_receipt.status
+                else:
+                    raise ValueError("Transaction failed.")
+            except Exception as e:
+                self.context.logger.error("Error updating price feeds: %s", e)
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE

@@ -42,7 +42,7 @@ from packages.dakavon.contracts.pyth import PUBLIC_ID as PYTH_PUBLIC_ID
 GAS = 500_000
 GAS_PREMIUM = 1.1  # 10% gas premium
 TX_TIMEOUT = 60  # seconds
-
+PYTH_USD_PRICEFEED_ID = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
 
 def load_contract(contract_path: Path) -> Contract:
     """Helper function to load a contract."""
@@ -253,6 +253,30 @@ class ConsumePriceAndPrintMessageRound(BaseState):
     def act(self) -> None:
         """Perform the act."""
 
+        # Get from shared state for this step: tx_receipt_status
+        tx_receipt_status = self.context.shared_state.get("tx_receipt_status")
+
+        if tx_receipt_status is None:
+            self.context.logger.error(
+                "No transaction receipt status found in shared state."
+            )
+            raise ValueError("No transaction receipt status found in shared state.")
+        elif tx_receipt_status == 1:
+            # Read price fron Pyth contract
+            pythUsdPrice = self.pyth_contract.get_price_no_older_than(
+                ledger_api=self.sepolia_ledger_api,
+                contract_address=self.pyth_address,
+                id=PYTH_USD_PRICEFEED_ID,
+                age=60,  # 60 seconds
+            )
+            pythUsdPrice = pythUsdPrice.get("price")
+            raw_price, _, exponent, _ = pythUsdPrice
+
+            # Calculate the actual price by shifting decimals
+            formatted_price = raw_price * (10 ** exponent)
+
+            self.context.logger.info("Price consumed from Pyth contract | $PYTH: $%.8f", formatted_price)
+
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
 
@@ -342,6 +366,12 @@ class UpdatePriceDataRound(BaseState):
                     self.context.logger.info(
                         "Transaction successful! Price feeds updated on-chain."
                     )
+                    self.context.shared_state["tx_receipt_status"] = tx_receipt.status
+                elif tx_receipt.status == 0:
+                    self.context.logger.error(
+                        "Transaction failed! Price feeds not updated on-chain."
+                    )
+                    self.context.shared_state["tx_receipt_status"] = tx_receipt.status
                 else:
                     raise ValueError("Transaction failed.")
             except Exception as e:
