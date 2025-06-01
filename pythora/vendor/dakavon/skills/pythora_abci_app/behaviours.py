@@ -38,11 +38,19 @@ from aea_ledger_ethereum import (
     try_decorator,
 )
 from packages.dakavon.contracts.pyth import PUBLIC_ID as PYTH_PUBLIC_ID
+from packages.dakavon.contracts.pythoraentropy import (
+    PUBLIC_ID as PYTHORA_ENTROPY_PUBLIC_ID,
+)
+from eth_utils import to_bytes
+from secrets import token_bytes
 
 GAS = 500_000
 GAS_PREMIUM = 1.1  # 10% gas premium
 TX_TIMEOUT = 60  # seconds
-PYTH_USD_PRICEFEED_ID = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
+PYTH_USD_PRICEFEED_ID = (
+    "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
+)
+
 
 def load_contract(contract_path: Path) -> Contract:
     """Helper function to load a contract."""
@@ -160,6 +168,16 @@ class BaseState(State, ABC):
         self.pyth_contract = contract
         self.pyth_address = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 
+        pythoraEntropyAuthor = PYTHORA_ENTROPY_PUBLIC_ID.author
+        pythoraEntropyName = PYTHORA_ENTROPY_PUBLIC_ID.name
+        pythoraEntropyContract = load_contract(
+            ROOT / pythoraEntropyAuthor / "contracts" / pythoraEntropyName
+        )
+        self.pythora_entropy_contract = pythoraEntropyContract
+        self.pythora_entropy_contract_address = (
+            "0xb2Fa94AEe40Ad375D1bb65F5442f36DBFc0bD35a"
+        )
+
     def act(self) -> None:
         """Perform the act."""
         self._is_done = True
@@ -180,6 +198,13 @@ class BaseState(State, ABC):
         return EthereumApi(address="https://sepolia.drpc.org", chain_id=str(11155111))
 
     @property
+    def arbitrum_sepolia_ledger_api(self) -> EthereumApi:
+        """Get the Arbitrum Sepolia ledger api."""
+        return EthereumApi(
+            address="https://sepolia-rollup.arbitrum.io/rpc", chain_id=str(421614)
+        )
+
+    @property
     def crypto(self) -> EthereumCrypto:
         """Get EthereumCrypto."""
         return EthereumCrypto(private_key_path="ethereum_private_key.txt")
@@ -197,6 +222,24 @@ class BaseState(State, ABC):
                 "gas": GAS,
                 "gasPrice": int(
                     self.sepolia_ledger_api.api.eth.gas_price * GAS_PREMIUM
+                ),
+                "value": value,
+            }
+        )
+
+    def build_transaction_arbitrum_sepolia(self, func, value: int = 0):
+        """Build the transaction for Arbitrum Sepolia."""
+
+        nonce = self.arbitrum_sepolia_ledger_api.api.eth.get_transaction_count(
+            self.crypto.address
+        )
+        return func.build_transaction(
+            {
+                "from": self.crypto.address,
+                "nonce": nonce,
+                "gas": GAS,
+                "gasPrice": int(
+                    self.arbitrum_sepolia_ledger_api.api.eth.gas_price * GAS_PREMIUM
                 ),
                 "value": value,
             }
@@ -273,9 +316,11 @@ class ConsumePriceAndPrintMessageRound(BaseState):
             raw_price, _, exponent, _ = pythUsdPrice
 
             # Calculate the actual price by shifting decimals
-            formatted_price = raw_price * (10 ** exponent)
+            formatted_price = raw_price * (10**exponent)
 
-            self.context.logger.info("Price consumed from Pyth contract | $PYTH: $%.8f", formatted_price)
+            self.context.logger.info(
+                "Price consumed from Pyth contract | $PYTH: $%.8f", formatted_price
+            )
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
@@ -290,6 +335,82 @@ class RegistrationRound(BaseState):
 
     def act(self) -> None:
         """Perform the act."""
+
+        # Create entropy and consume random number
+
+        # 1. Generate userRandomNumber - a 32-byte random seed
+        user_random_number = token_bytes(32)  # bytes object
+        user_random_number_hex = "0x" + user_random_number.hex()
+
+        # print(f"Requesting random number with user seed: {user_random_number.hex()}")
+        self.context.logger.info(
+            "Requesting random number with user seed: %s", user_random_number.hex()
+        )
+
+        # 2. Request a random number from the Pythora Entropy contract
+        w3_function = self.pythora_entropy_contract.request_random_number(
+            ledger_api=self.arbitrum_sepolia_ledger_api,
+            contract_address=self.pythora_entropy_contract_address,
+            user_random_number=to_bytes(hexstr=user_random_number.hex()),
+        )
+        fee_amount = 372357000000001  # got value over etherscan
+        raw_tx = self.build_transaction_arbitrum_sepolia(w3_function, value=fee_amount)
+        signed_tx = self.crypto.entity.sign_transaction(raw_tx)
+        signed_tx_dict = signed_tx_to_dict(signed_tx)
+
+        # 3. Send the signed transaction to the Arbitrum Sepolia network
+        tx_hash = try_send_signed_transaction(
+            self.arbitrum_sepolia_ledger_api, signed_tx_dict
+        )
+        self.context.logger.info(f"Transaction hash: {tx_hash}")
+
+        # 4. Wait for the transaction receipt
+        tx_receipt = (
+            self.arbitrum_sepolia_ledger_api.api.eth.wait_for_transaction_receipt(
+                tx_hash, timeout=TX_TIMEOUT
+            )
+        )
+        print(f"Transaction receipt: {tx_receipt}")
+
+        if tx_receipt.status == 1:
+            self.context.logger.info(
+                "Transaction successful! Random number requested from Pythora Entropy contract."
+            )
+            sequence_number = (
+                self.pythora_entropy_contract.sequence_numbers_by_user_random_number(
+                    ledger_api=self.arbitrum_sepolia_ledger_api,
+                    contract_address=self.pythora_entropy_contract_address,
+                    var_0=user_random_number_hex,
+                )
+            )
+            self.context.logger.info(
+                "Sequence number for user random number %s: %s",
+                user_random_number_hex,
+                sequence_number,
+            )
+        else:
+            self.context.logger.error(
+                "Transaction failed! Random number not requested from Pythora Entropy contract."
+            )
+            raise ValueError("Transaction failed.")
+
+        time.sleep(15)  # Wait for the random number to be generated
+
+        # 5. Fetch the random number from the Pythora Entropy contract and print it
+        random_number = self.pythora_entropy_contract.random_numbers_by_sequence_number(
+            ledger_api=self.arbitrum_sepolia_ledger_api,
+            contract_address=self.pythora_entropy_contract_address,
+            var_0=sequence_number["int"],
+        )
+
+        raw_random_bytes = random_number["str"]
+        random_number_hex = "0x" + raw_random_bytes.hex()
+
+        self.context.logger.info(
+            "Random number consumed from Pythora Entropy contract (hex): %s", random_number_hex
+        )
+
+        breakpoint()
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
@@ -307,7 +428,9 @@ class ResetAndPauseRound(BaseState):
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
-        time.sleep(30)  # Pause for 30 seconds before next round (we do not want to spend so much gas for now)
+        time.sleep(
+            30
+        )  # Pause for 30 seconds before next round (we do not want to spend so much gas for now)
 
 
 class UpdatePriceDataRound(BaseState):

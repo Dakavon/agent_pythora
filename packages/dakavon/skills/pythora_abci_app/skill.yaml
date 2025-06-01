@@ -19,6 +19,7 @@ fingerprint_ignore_patterns: []
 connections: []
 contracts:
 - dakavon/pyth:0.1.0:bafybeiahdp2gsjukyahzy7y364xuqekvdt76lnx3bz3snsfk7ehsursl64
+- dakavon/pythoraentropy:0.1.0:bafybeibhv2k32pbmjx6h3hycucgjm33fxmg3tnmthapzj4ulq7wyxu6xfy
 protocols:
 - eightballer/default:0.1.0:bafybeicsdb3bue2xoopc6lue7njtyt22nehrnkevmkuk2i6ac65w722vwy
 - eightballer/http:0.1.0:bafybeid75xhq7hfdt7sgj7yrn44yj57xrgxscaw34ir46tndfzvodioxme

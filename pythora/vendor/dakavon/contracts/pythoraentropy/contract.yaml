@@ -1,0 +1,17 @@
+name: pythoraentropy
+author: dakavon
+version: 0.1.0
+type: contract
+description: The scaffold contract scaffolds a contract to be implemented by the developer.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeifsoqblvpka26hsozq5ix54azitljkfaixd4uipvez4m664bff7uq
+  build/pythoraentropy.json: bafybeiekpct34unfkbjaefwgujlywrl7v3oln57alb3ilti6zowfbnaela
+  contract.py: bafybeidtu54jw3go2mbdq2rc6w375z3qb3svwddw2v53xwqj6blo5dlxtq
+fingerprint_ignore_patterns: []
+class_name: Pythoraentropy
+contract_interface_paths:
+  ethereum: build/pythoraentropy.json
+dependencies: {}
+contracts: []
