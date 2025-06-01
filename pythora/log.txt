@@ -1,26 +1,26 @@
-2025-06-01 01:47:56,100 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class RegistrationRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,103 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class UpdatePriceDataRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,104 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class ConsumePriceAndPrintMessageRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,105 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class BaseState of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,106 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class FetchPriceDataRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,107 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class ResetAndPauseRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
-2025-06-01 01:47:56,210 [INFO] aea.pythora.packages.eightballer.connections.http_server: [pythora] HTTP Server has connected to port: 8888.
-2025-06-01 01:47:56,212 [INFO] aea.pythora.packages.eightballer.connections.prometheus: [pythora] Prometheus server started at 0.0.0.0:26658
-2025-06-01 01:47:56,217 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up HttpHandler
-2025-06-01 01:47:56,218 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up PrometheusHandler
-2025-06-01 01:47:56,220 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Setting up Pythoraabciapp FSM behaviour.
-2025-06-01 01:47:56,221 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up AdvancedDataRequestBehaviour
-2025-06-01 01:47:56,222 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: num_retrievals
-2025-06-01 01:47:56,223 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: num_requests
-2025-06-01 01:47:56,224 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: memory_usage
-2025-06-01 01:47:56,227 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: cpu_usage
-2025-06-01 01:47:56,234 [INFO] aea.pythora.agent_loop: [pythora] Start processing messages...
-2025-06-01 01:47:56,238 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering registrationround
-2025-06-01 01:47:56,241 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering fetchpricedataround
-2025-06-01 01:47:56,501 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering updatepricedataround
-2025-06-01 01:47:57,086 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Transaction hash: 0xc724f8432e3bcc190ac5ca790d61a34570435ecc8e484dafcbb639822ccdfce2
-2025-06-01 01:48:01,964 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Transaction successful! Price feeds updated on-chain.
-2025-06-01 01:48:01,968 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering consumepriceandprintmessageround
-2025-06-01 01:48:02,101 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Price consumed from Pyth contract: $0.12039874
-2025-06-01 01:48:02,107 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering resetandpauseround
-2025-06-01 01:48:13,779 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering resetandpauseround
+2025-06-01 03:22:27,761 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class ConsumePriceAndPrintMessageRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,765 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class BaseState of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,766 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class FetchPriceDataRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,767 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class RegistrationRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,768 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class UpdatePriceDataRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,769 [WARNING] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Class ResetAndPauseRound of type behaviour found in skill module behaviours.py but not declared in the configuration file.
+2025-06-01 03:22:27,853 [INFO] aea.pythora.packages.eightballer.connections.http_server: [pythora] HTTP Server has connected to port: 8888.
+2025-06-01 03:22:27,855 [INFO] aea.pythora.packages.eightballer.connections.prometheus: [pythora] Prometheus server started at 0.0.0.0:26658
+2025-06-01 03:22:27,861 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up HttpHandler
+2025-06-01 03:22:27,863 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up PrometheusHandler
+2025-06-01 03:22:27,864 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Setting up Pythoraabciapp FSM behaviour.
+2025-06-01 03:22:27,866 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] setting up AdvancedDataRequestBehaviour
+2025-06-01 03:22:27,867 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: num_retrievals
+2025-06-01 03:22:27,868 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: num_requests
+2025-06-01 03:22:27,870 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: memory_usage
+2025-06-01 03:22:27,872 [INFO] aea.pythora.packages.eightballer.skills.prometheus: [pythora] Adding Prometheus metric: cpu_usage
+2025-06-01 03:22:27,882 [INFO] aea.pythora.agent_loop: [pythora] Start processing messages...
+2025-06-01 03:22:27,884 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering registrationround
+2025-06-01 03:22:27,887 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering fetchpricedataround
+2025-06-01 03:22:28,343 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering updatepricedataround
+2025-06-01 03:22:28,943 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Transaction hash: 0x892b5002fb86f26a41ed8e63eba856dabb8b127a264ae9ec7cb781dac228cffe
+2025-06-01 03:22:37,632 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Transaction successful! Price feeds updated on-chain.
+2025-06-01 03:22:37,638 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering consumepriceandprintmessageround
+2025-06-01 03:22:37,766 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Price consumed from Pyth contract | $PYTH: $0.11799244
+2025-06-01 03:22:37,773 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering resetandpauseround
+2025-06-01 03:22:40,669 [INFO] aea.pythora.packages.dakavon.skills.pythora_abci_app: [pythora] Entering resetandpauseround

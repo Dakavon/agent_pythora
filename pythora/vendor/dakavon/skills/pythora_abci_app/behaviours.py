@@ -275,7 +275,7 @@ class ConsumePriceAndPrintMessageRound(BaseState):
             # Calculate the actual price by shifting decimals
             formatted_price = raw_price * (10 ** exponent)
 
-            self.context.logger.info("Price consumed from Pyth contract: $%.8f", formatted_price)
+            self.context.logger.info("Price consumed from Pyth contract | $PYTH: $%.8f", formatted_price)
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
