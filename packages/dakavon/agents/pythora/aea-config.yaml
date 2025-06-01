@@ -20,7 +20,7 @@ protocols:
 - eightballer/prometheus:1.0.0:bafybeidxo32tu43ru3xlk3kd5b6xlwf6vaytxvvhtjbh7ag52kexos4ke4
 - open_aea/signing:1.0.0:bafybeig2d36zxy65vd7fwhs7scotuktydcarm74aprmrb5nioiymr3yixm
 skills:
-- dakavon/pythora_abci_app:0.1.0:bafybeiaght2saoaqjsbr7eg5r3kgcfjb5rvv2ulj5bm3dr3x4gziwekfsa
+- dakavon/pythora_abci_app:0.1.0:bafybeihaboyuhlgvvx65yy3qcxqxsyfdi2xto7gzgjdnnd4ob23d6f752i
 - eightballer/prometheus:0.1.0:bafybeicl5i7e467aowfarke4bbyixo2dggar276njmvyuwbsby5pxshhtu
 customs: []
 default_ledger: ethereum

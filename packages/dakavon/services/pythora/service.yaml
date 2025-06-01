@@ -9,7 +9,7 @@ fingerprint:
   tests/__init__.py: bafybeiausykbndof27hjfgwqg6nnmk7zw7lyytwzekih3gszwdypbtxjka
   tests/test_service.py: bafybeicplirjoql5q3l5zjl5xrgamnoxuj3year7u2vrtfnzzllzeyutuy
 fingerprint_ignore_patterns: []
-agent: dakavon/pythora:0.1.0:bafybeidn5b72ewxcmdj7h2x6zcrmwtcq5jrixeoedslggjpmd7eueybb64
+agent: dakavon/pythora:0.1.0:bafybeig6cidhvo3tqpcgy5rhcfzdijxdpxtp3a4eezxvld5zawxpayu2wm
 number_of_agents: 1
 deployment:
   agent:
