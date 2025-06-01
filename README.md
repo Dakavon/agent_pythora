@@ -38,16 +38,19 @@ Pythora creates an **Olas Agent** that:
 2. **Processes and verifies** the data to meet on-chain formatting requirements.
 3. **Updates the data on-chain** using the `updatePriceFeeds` method.
 4. **Automates the cycle**, ensuring decentralized and continuous price updates with no manual intervention.
+5. **Requests verifiable randomness** from the Pyth Entropy service before pushing updates, enabling randomness-based coordination among agents.
 
 ---
 
 ## 🛠️ Technologies Used
 
-| Technology       | Purpose                              |
-|------------------|--------------------------------------|
-| **Pyth Network**  | Provides high-fidelity price feeds |
-| **Autonolas**      | Framework for building autonomous agents |
-| **EVM blockchain** | On-chain price updates to be used in DeFi protocols |
+| Technology         | Purpose                                                              |
+|--------------------|----------------------------------------------------------------------|
+| **Pyth Network**    | Provides high-fidelity price feeds                                   |
+| **Pyth Entropy**    | Supplies verifiable randomness used for coordinating agent actions  |
+| **Autonolas**       | Framework for building autonomous agents                             |
+| **Foundry**         | Development, testing, and deployment of smart contracts              |
+| **EVM blockchain**  | On-chain price updates to be used in DeFi protocols                  |
 
 ---
 
