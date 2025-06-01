@@ -283,7 +283,7 @@ class ResetAndPauseRound(BaseState):
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
-        time.sleep(5)
+        time.sleep(30)  # Pause for 30 seconds before next round (we do not want to spend so much gas for now)
 
 
 class UpdatePriceDataRound(BaseState):
