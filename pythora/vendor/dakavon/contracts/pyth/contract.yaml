@@ -1,0 +1,17 @@
+name: pyth
+author: dakavon
+version: 0.1.0
+type: contract
+description: The scaffold contract scaffolds a contract to be implemented by the developer.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeie2lopma3ey7mnvzf6i6pb274zekggzd7c47pfxxdhp6zwzituqsm
+  build/pyth.json: bafybeihhnd2s5tjrwsf5fuw4bqrsuexemc7t7v63yzslmhvdzpnhyyimcq
+  contract.py: bafybeidicyik6zypyo7msqp32aapsn7ikqms6jsorkfykpdiweefpmtpay
+fingerprint_ignore_patterns: []
+class_name: Pyth
+contract_interface_paths:
+  ethereum: build/pyth.json
+dependencies: {}
+contracts: []

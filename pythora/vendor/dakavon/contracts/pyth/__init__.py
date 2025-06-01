@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2022 Valory AG
-#   Copyright 2018-2021 Fetch.AI Limited
+#   Copyright 2021-2023 Valory AG
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,10 +15,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-
-"""This module contains the implementation of the http echo skill."""
+"""This module contains the contract for the pyth."""
 
 from aea.configurations.base import PublicId
 
 
-PUBLIC_ID = PublicId.from_str("dakavon/pythora_abci_app:0.1.0")
+PUBLIC_ID = PublicId.from_str("dakavon/pyth:0.1.0")

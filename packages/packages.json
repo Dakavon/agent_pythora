@@ -1,9 +1,9 @@
 {
     "dev": {
         "contract/dakavon/pyth/0.1.0": "bafybeiahdp2gsjukyahzy7y364xuqekvdt76lnx3bz3snsfk7ehsursl64",
-        "skill/dakavon/pythora_abci_app/0.1.0": "bafybeictkhj7pmc2bzddv6cdwfm73ao32wab7jv7imz2gatyrbsqnp2w24",
-        "agent/dakavon/pythora/0.1.0": "bafybeigjvpc4sp7kra4n2zofxltgn25v72m3kmcuwin5hoa7rmxzofz6oq",
-        "service/dakavon/pythora/0.1.0": "bafybeid3fyn6bss3dy2vi2xnlhxo2ycpywejwn5wivulnmqijrhtnlqyyq"
+        "skill/dakavon/pythora_abci_app/0.1.0": "bafybeiaght2saoaqjsbr7eg5r3kgcfjb5rvv2ulj5bm3dr3x4gziwekfsa",
+        "agent/dakavon/pythora/0.1.0": "bafybeidn5b72ewxcmdj7h2x6zcrmwtcq5jrixeoedslggjpmd7eueybb64",
+        "service/dakavon/pythora/0.1.0": "bafybeiaqwgxnvootybu2a4nv6wlqqkiavrid4baym6ywl656cqkmxllopq"
     },
     "third_party": {
         "protocol/eightballer/default/0.1.0": "bafybeicsdb3bue2xoopc6lue7njtyt22nehrnkevmkuk2i6ac65w722vwy",
