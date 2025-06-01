@@ -344,7 +344,7 @@ class RegistrationRound(BaseState):
 
         # print(f"Requesting random number with user seed: {user_random_number.hex()}")
         self.context.logger.info(
-            "Requesting random number with user seed: %s", user_random_number.hex()
+            "### Requesting random number with user seed: %s", user_random_number.hex()
         )
 
         # 2. Request a random number from the Pythora Entropy contract
@@ -362,7 +362,7 @@ class RegistrationRound(BaseState):
         tx_hash = try_send_signed_transaction(
             self.arbitrum_sepolia_ledger_api, signed_tx_dict
         )
-        self.context.logger.info(f"Transaction hash: {tx_hash}")
+        self.context.logger.info(f"### Transaction hash: {tx_hash}")
 
         # 4. Wait for the transaction receipt
         tx_receipt = (
@@ -374,7 +374,7 @@ class RegistrationRound(BaseState):
 
         if tx_receipt.status == 1:
             self.context.logger.info(
-                "Transaction successful! Random number requested from Pythora Entropy contract."
+                "### Transaction successful! Random number requested from Pythora Entropy contract."
             )
             sequence_number = (
                 self.pythora_entropy_contract.sequence_numbers_by_user_random_number(
@@ -384,13 +384,13 @@ class RegistrationRound(BaseState):
                 )
             )
             self.context.logger.info(
-                "Sequence number for user random number %s: %s",
+                "### Sequence number for user random number %s: %s",
                 user_random_number_hex,
                 sequence_number,
             )
         else:
             self.context.logger.error(
-                "Transaction failed! Random number not requested from Pythora Entropy contract."
+                "### Transaction failed! Random number not requested from Pythora Entropy contract."
             )
             raise ValueError("Transaction failed.")
 
@@ -407,7 +407,7 @@ class RegistrationRound(BaseState):
         random_number_hex = "0x" + raw_random_bytes.hex()
 
         self.context.logger.info(
-            "Random number consumed from Pythora Entropy contract (hex): %s", random_number_hex
+            "### Random number consumed from Pythora Entropy contract (hex): %s", random_number_hex
         )
 
         # breakpoint()
@@ -487,18 +487,18 @@ class UpdatePriceDataRound(BaseState):
                 print(f"Transaction receipt: {tx_receipt}")
                 if tx_receipt.status == 1:
                     self.context.logger.info(
-                        "Transaction successful! Price feeds updated on-chain."
+                        "### Transaction successful! Price feeds updated on-chain."
                     )
                     self.context.shared_state["tx_receipt_status"] = tx_receipt.status
                 elif tx_receipt.status == 0:
                     self.context.logger.error(
-                        "Transaction failed! Price feeds not updated on-chain."
+                        "### Transaction failed! Price feeds not updated on-chain."
                     )
                     self.context.shared_state["tx_receipt_status"] = tx_receipt.status
                 else:
                     raise ValueError("Transaction failed.")
             except Exception as e:
-                self.context.logger.error("Error updating price feeds: %s", e)
+                self.context.logger.error("### Error updating price feeds: %s", e)
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE

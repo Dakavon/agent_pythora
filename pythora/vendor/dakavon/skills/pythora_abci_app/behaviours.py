@@ -344,8 +344,11 @@ class RegistrationRound(BaseState):
 
         # print(f"Requesting random number with user seed: {user_random_number.hex()}")
         self.context.logger.info(
+            "####################\n"
             "Requesting random number with user seed: %s", user_random_number.hex()
         )
+
+        breakpoint()
 
         # 2. Request a random number from the Pythora Entropy contract
         w3_function = self.pythora_entropy_contract.request_random_number(
@@ -410,7 +413,7 @@ class RegistrationRound(BaseState):
             "Random number consumed from Pythora Entropy contract (hex): %s", random_number_hex
         )
 
-        breakpoint()
+        # breakpoint()
 
         self._is_done = True
         self._event = PythoraabciappEvents.DONE
